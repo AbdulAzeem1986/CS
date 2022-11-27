@@ -1,12 +1,18 @@
+// login callback function
 
+var username=document.getElementById("username");
+    
+var password=document.getElementById("password");
 
 function verify(callback){
-    var username=document.getElementById("username");
     
-    var password=document.getElementById("password");
     
+    if(username.value == "" && password.value == ""){
+        alert("login using valid credentials");
+        return false
+    }
 
-    if(username.value == "admin" && password.value == 12345){
+    else if(username.value == "admin" && password.value == 12345){
         console.log("success");
         callback();
     }
@@ -17,76 +23,21 @@ function verify(callback){
         console.log("false")
         return false
         
-    }
-}
-
+    };
+};
 
 function redirect(){
     console.log("succ");
     window.location.href="main.html"
     };
 
-
 verify(redirect);
 
+// callback function ending
 
 
 
-function ajax(){
-
-    var xhttp = new XMLHttpRequest;
-
-    xhttp.onreadystatechange=function(){
-        
-        if (this.readyState==4 && this.status==200){
-
-            let details= JSON.parse(this.responseText);
-
-
-       
-            console.log(details[0].id);
-            console.log(details.length);
-
-            // let list=details.Array;
-            // console.log(list);
-            // var list=details.Array;
-            // console.log(list);
-
-            var idcol="";
-            var titlecol="";
-            var statuscol="";
-
-            for(i=0;i<details.length;i++){
-                idcol += "<li>"+details[i].id+"</li>";
-                titlecol += "<li>"+details[i].title+"</li>";
-                statuscol += "<li>"+details[i].completed+"</li>";
-
-                console.log(idcol);
-                document.getElementById("idcolumn").innerHTML = idcol;
-                document.getElementById("titlecolumn").innerHTML = titlecol;
-                document.getElementById("statuscolumn").innerHTML = statuscol;
-            }
-
-            // let list=details.id;
-            // console.log(list);
-    
-
-           
-        };
-        
-};
-   
-    xhttp.open("GET","https://jsonplaceholder.typicode.com/todos",true);
-    xhttp.send();
-};
-
-
-// To Do function ending
-
-
-
-
-// logout function starting
+// To Do function starting
 
 function table1(){
 
@@ -96,23 +47,79 @@ function table1(){
         
         if (this.readyState==4 && this.status==200){
 
-            let details= JSON.parse(this.responseText);
+            let details= JSON.parse(this.responseText);         
+
+            let out="";
+
+            for(i=0;i<details.length;i++){
+            // var checkbox = document.createElement("INPUT");
+            // checkbox.setAttribute("type", "checkbox");
+            // console.log(checkbox)
+            
+
+                out+= `
+                <tbody>
+                <tr>
+                    <td>${details[i].id}</td>
+                    <td>${details[i].title}</td>
+                    <td><input type="checkbox" ${details[i].completed?"checked=true disabled=true":null}></td>
+                </tr>
+                </tbody>  `;
+            
+            };
+            
+        
+            let output=  `<thead>
+            <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Completed</th>
+            </tr>
+            </thead>
+            ${out}`
+
+
+            document.getElementById("tabledata").innerHTML=output; 
+               
+    };
+              
+        };
+
+        xhttp.open("GET","https://jsonplaceholder.typicode.com/todos",true);
+        xhttp.send();          
+        
+};
+   
+// To Do function ending
+
+
+
+
+// logout function starting
+
+function logout(){
+    window.location.href="login.html";
+    };
+
+// logout function ending
+
+
+// Test codes
+
 
             // let iddata = document.getElementById("iddata");
             // let titledata = document.getElementById("titledata");
             // let compdata = document.getElementById("compdata");
 
-            let out="";
 
-            // for(let detail of details)
+     // for(let detail of details)
             
             // var idcol="";
             // var titlecol="";
             // var statuscol="";
 
-            for(i=0;i<details.length;i++){
 
-                // out+= details[i];
+    // out+= details[i];
 
                 // idcol += "<li>"+details[i].id+"</li>";
                 // titlecol += "<li>"+details[i].title+"</li>";
@@ -124,31 +131,8 @@ function table1(){
                 // document.getElementById("titlecolumn").innerHTML = titlecol;
                 // document.getElementById("statuscolumn").innerHTML = statuscol;
                 // </tr>
-            
-                out+= `
-                <tr>
-                    <td>${details[i].id}</td>
-                    <td>${details[i].title}</td>
-                    <td>${details[i].completed}</td>
-                </tr>  `;
-            
-            };
-            
-            tabledata.innerHTML=out; 
-               
-    }
-    
-        // console.log(out);
-              
-        };
 
-        xhttp.open("GET","https://jsonplaceholder.typicode.com/todos",true);
-        xhttp.send();    
-         
-        
-};
-   
-   
+
 
 
 // function table(details){
