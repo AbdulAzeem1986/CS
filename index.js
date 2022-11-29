@@ -42,52 +42,40 @@ verify(redirect);
 function table1(){
 
     var xhttp = new XMLHttpRequest;
-
     xhttp.onreadystatechange=function(){
         
         if (this.readyState==4 && this.status==200){
 
-            let details= JSON.parse(this.responseText);         
-
+            var details= JSON.parse(this.responseText);         
             let out="";
 
             for(i=0;i<details.length;i++){
-            // var checkbox = document.createElement("INPUT");
-            // checkbox.setAttribute("type", "checkbox");
-            // console.log(checkbox)
-            
-
-                out+= `
-                <tbody>
-                <tr>
-                    <td>${details[i].id}</td>
-                    <td>${details[i].title}</td>
-                    <td><input type="checkbox" ${details[i].completed?"checked=true disabled=true":null}></td>
-                </tr>
-                </tbody>  `;
-            
-            };
-            
         
+                out+= `
+                
+                <tr>
+                    <td class="td1 text-center">${details[i].id}</td>
+                    <td class="td2" >${details[i].title}</td>
+                    <td class="td3 text-center"><input type="checkbox" onchange="validate().then(increment).catch(decrement)" id="checkbox" value=${i} ${details[i].completed?"checked disabled":"unchecked"}></td>
+                </tr>
+      `
+             };
+            
             let output=  `<thead>
             <tr>
-            <th>Id</th>
+            <th class="text-center">Id</th>
             <th>Title</th>
-            <th>Completed</th>
+            <th class="text-center">Completed</th>
             </tr>
             </thead>
             ${out}`
 
-
             document.getElementById("tabledata").innerHTML=output; 
-               
     };
-              
-        };
+               };
 
         xhttp.open("GET","https://jsonplaceholder.typicode.com/todos",true);
-        xhttp.send();          
-        
+        xhttp.send();                  
 };
    
 // To Do function ending
@@ -98,56 +86,59 @@ function table1(){
 // logout function starting
 
 function logout(){
-    window.location.href="login.html";
+    window.location.href="index.html";
     };
 
 // logout function ending
 
 
-// Test codes
+var count="";
+
+function validate(){
+
+// var table = document.getElementById("table1");
+    var t = document.getElementById("tabledata");
+    var tb =t.getElementsByTagName("tbody");
+    var trs = tb[0].getElementsByTagName("tr");
+    var tc = trs[0].getElementsByTagName("td");
+    var cb = tc[1].getElementsByTagName("input");
 
 
-            // let iddata = document.getElementById("iddata");
-            // let titledata = document.getElementById("titledata");
-            // let compdata = document.getElementById("compdata");
+    
+    console.log(trs.length);
+    
+    
+    for (var i=0;i,trs.length;i++){
+    
 
+               return new Promise(function(resolve,reject){
 
-     // for(let detail of details)
-            
-            // var idcol="";
-            // var titlecol="";
-            // var statuscol="";
+                if(trs[i].onchange==true){
+                    
+                    if(cb.checked==true){
+                         resolve();
+                    }
+                    else{
+                        reject();
 
+                    }
+                }
+              
+        });
+};
+};
 
-    // out+= details[i];
+function increment(){
+    count++;
+    if(count==5){
+    alert("Congrats. 5 Tasks have been Successfully Completed");
+    }
+    else{
+        return count;
+    }  
+};
 
-                // idcol += "<li>"+details[i].id+"</li>";
-                // titlecol += "<li>"+details[i].title+"</li>";
-                // statuscol += "<li>"+details[i].completed+"</li>";
-
-                // console.log(idcol);
-                // <tr>
-                // <td>idcolumn.innerHTML = idcol</td>
-                // document.getElementById("titlecolumn").innerHTML = titlecol;
-                // document.getElementById("statuscolumn").innerHTML = statuscol;
-                // </tr>
-
-
-
-
-// function table(details){
-
-//     let tabledata = document.getElementById("tabledata");
-
-//     let out="";
-
-//     for(let detail of details){
-//         out+= `
-//             <tr>
-//                 <td>${details.id}</td>
-//             </tr>
-        
-//         `;
-//     }
-// tabledata.innerHTML=out;
-// }
+function decrement(){
+    count--;
+    return count
+}
