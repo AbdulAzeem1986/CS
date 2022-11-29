@@ -86,7 +86,7 @@ function table1(){
 // logout function starting
 
 function logout(){
-    window.location.href="index.html";
+    window.location.href="index.html"
     };
 
 // logout function ending
