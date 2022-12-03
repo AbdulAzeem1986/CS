@@ -56,7 +56,7 @@ function table1(){
                 <tr>
                     <td class="td1 text-center">${details[i].id}</td>
                     <td class="td2" >${details[i].title}</td>
-                    <td class="td3 text-center"><input type="checkbox" onchange="validate().then(increment).catch(decrement)" id="checkbox" value=${i} ${details[i].completed?"checked disabled":"unchecked"}></td>
+                    <td class="td3 text-center"><input class="checkbox" type="checkbox" onchange="validate()" id="checkbox" value=${i} ${details[i].completed?"checked disabled":"unchecked"}></td>
                 </tr>
       `
              };
@@ -92,53 +92,34 @@ function logout(){
 // logout function ending
 
 
-var count="";
+// Checkbox validation
 
 function validate(){
 
-// var table = document.getElementById("table1");
-    var t = document.getElementById("tabledata");
-    var tb =t.getElementsByTagName("tbody");
-    var trs = tb[0].getElementsByTagName("tr");
-    var tc = trs[0].getElementsByTagName("td");
-    var cb = tc[1].getElementsByTagName("input");
+    var promise= new Promise(function(resolve,reject){
 
+        var cb = document.getElementsByClassName("checkbox");
 
-    
-    console.log(trs.length);
-    
-    
-    for (var i=0;i,trs.length;i++){
-    
+        var counter=1;        
+        
+        for(i=1;i<cb.length;i++){
+        
+                if(cb[i].defaultChecked==false){
 
-               return new Promise(function(resolve,reject){
+                    if(cb[i].checked==true){
 
-                if(trs[i].onchange==true){
-                    
-                    if(cb.checked==true){
-                         resolve();
-                    }
-                    else{
-                        reject();
+                        counter+=1;                      
+                    };
+                };
+            };
+            
+            if(counter==5){
+                resolve("Congrats!!! 5 Tasks have been successfully completed");   
+            };  
+    })
 
-                    }
-                }
-              
-        });
+            promise.then(function(s){
+                
+            alert(s)
+    }); 
 };
-};
-
-function increment(){
-    count++;
-    if(count==5){
-    alert("Congrats. 5 Tasks have been Successfully Completed");
-    }
-    else{
-        return count;
-    }  
-};
-
-function decrement(){
-    count--;
-    return count
-}
